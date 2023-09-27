@@ -56,5 +56,5 @@ class PhotoGalleryViewModel : ViewModel() {
 
 data class PhotoGalleryUiState(
     val images: List<GalleryItem> = listOf(),
-    val query: String = "",
+    val query: String = ""
 )

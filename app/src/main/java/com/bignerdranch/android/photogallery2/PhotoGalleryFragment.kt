@@ -58,6 +58,7 @@ class PhotoGalleryFragment : Fragment() {
                 photoGalleryViewModel.uiState.collect { state ->
                     binding.photoGrid.adapter = PhotoListAdapter(state.images)
                     searchView?.setQuery(state.query, false)
+                    binding.progressBar.visibility = View.GONE
                 }
             }
         }
@@ -79,6 +80,7 @@ class PhotoGalleryFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d(TAG, "QueryTextSubmit: $query")
                 photoGalleryViewModel.setQuery(query ?: "")
+                binding.progressBar.visibility = View.VISIBLE
                 hideSoftKeyboard()
                 return true
             }
@@ -88,12 +90,19 @@ class PhotoGalleryFragment : Fragment() {
                 return false
             }
         })
+
+        searchView?.setOnCloseListener {
+            photoGalleryViewModel.setQuery("")
+            binding.progressBar.visibility = View.VISIBLE
+            false
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_item_clear -> {
                 photoGalleryViewModel.setQuery("")
+                binding.progressBar.visibility = View.VISIBLE
                 true
             }
 
