@@ -1,6 +1,8 @@
 package com.bignerdranch.android.photogallery2
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bignerdranch.android.photogallery2.api.GalleryItem
@@ -21,6 +23,9 @@ class PhotoGalleryViewModel : ViewModel() {
         MutableStateFlow(PhotoGalleryUiState())
     val uiState: StateFlow<PhotoGalleryUiState>
         get() = _uiState.asStateFlow()
+
+    private val _isProgressBarVisible = MutableLiveData<Boolean>()
+    val isProgressBarVisible: LiveData<Boolean> = _isProgressBarVisible
 
     init {
         viewModelScope.launch {
@@ -51,6 +56,10 @@ class PhotoGalleryViewModel : ViewModel() {
         } else {
             photoRepository.fetchPhotos()
         }
+    }
+
+    fun toggleProgressBarVisibility(isVisible: Boolean) {
+        _isProgressBarVisible.value = isVisible
     }
 }
 
