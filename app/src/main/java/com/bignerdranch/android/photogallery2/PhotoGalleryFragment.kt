@@ -83,7 +83,6 @@ class PhotoGalleryFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Log.d(TAG, "QueryTextSubmit: $query")
                 photoGalleryViewModel.setQuery(query ?: "")
-                photoGalleryViewModel.toggleProgressBarVisibility(true)
                 hideSoftKeyboard()
                 return true
             }
@@ -96,7 +95,6 @@ class PhotoGalleryFragment : Fragment() {
 
         searchView?.setOnCloseListener {
             photoGalleryViewModel.setQuery("")
-            photoGalleryViewModel.toggleProgressBarVisibility(true)
             false
         }
     }
@@ -105,7 +103,6 @@ class PhotoGalleryFragment : Fragment() {
         return when (item.itemId) {
             R.id.menu_item_clear -> {
                 photoGalleryViewModel.setQuery("")
-                photoGalleryViewModel.toggleProgressBarVisibility(true)
                 hideSoftKeyboard()
                 true
             }

@@ -48,6 +48,7 @@ class PhotoGalleryViewModel : ViewModel() {
 
     fun setQuery(query: String) {
         viewModelScope.launch { preferencesRepository.setStoredQuery(query) }
+        toggleProgressBarVisibility(true)
     }
 
     private suspend fun fetchGalleryItems(query: String): List<GalleryItem> {
