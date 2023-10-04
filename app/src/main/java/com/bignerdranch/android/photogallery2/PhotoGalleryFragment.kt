@@ -74,6 +74,7 @@ class PhotoGalleryFragment : Fragment() {
                     binding.photoGrid.adapter = PhotoListAdapter(state.images)
                     searchView?.setQuery(state.query, false)
                     photoGalleryViewModel.toggleProgressBarVisibility(false)
+                    updatePollingSate(state.isPolling)
                 }
             }
         }
@@ -120,6 +121,11 @@ class PhotoGalleryFragment : Fragment() {
                 true
             }
 
+            R.id.menu_item_toggle_polling -> {
+                photoGalleryViewModel.toggleIsPolling()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -137,5 +143,11 @@ class PhotoGalleryFragment : Fragment() {
             activity?.currentFocus?.windowToken,
             InputMethodManager.HIDE_NOT_ALWAYS
         )
+    }
+
+    private fun updatePollingSate(isPolling: Boolean) {
+        val togglePollingItemTitle =
+            if (isPolling) R.string.stop_polling else R.string.start_polling
+        pollingMenuItem?.setTitle(togglePollingItemTitle)
     }
 }
