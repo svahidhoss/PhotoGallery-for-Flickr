@@ -72,7 +72,7 @@ class PhotoGalleryViewModel : ViewModel() {
 
     fun toggleIsPolling() {
         viewModelScope.launch {
-            preferencesRepository.setPolling(!_uiState.value.isPolling)
+            preferencesRepository.setPolling(!uiState.value.isPolling)
         }
     }
 }

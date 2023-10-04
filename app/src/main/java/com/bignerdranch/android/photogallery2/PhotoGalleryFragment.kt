@@ -104,11 +104,6 @@ class PhotoGalleryFragment : Fragment() {
                 return false
             }
         })
-
-        searchView?.setOnCloseListener {
-            photoGalleryViewModel.setQuery("")
-            false
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -149,12 +144,13 @@ class PhotoGalleryFragment : Fragment() {
         pollingMenuItem?.setTitle(togglePollingItemTitle)
 
         if (isPolling) {
-            val constraints =
-                Constraints.Builder().setRequiredNetworkType(NetworkType.UNMETERED).build()
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.UNMETERED)
+                .build()
             val periodicRequest =
-                PeriodicWorkRequestBuilder<PollWorker>(15, TimeUnit.MINUTES).setConstraints(
-                    constraints
-                ).build()
+                PeriodicWorkRequestBuilder<PollWorker>(15, TimeUnit.MINUTES)
+                    .setConstraints(constraints)
+                    .build()
             WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
                 POLL_WORK,
                 ExistingPeriodicWorkPolicy.KEEP,
