@@ -152,11 +152,14 @@ class PhotoGalleryFragment : Fragment() {
             val constraints =
                 Constraints.Builder().setRequiredNetworkType(NetworkType.UNMETERED).build()
             val periodicRequest =
-                PeriodicWorkRequestBuilder<PollWorker>(15, TimeUnit.MINUTES).setConstraints(constraints).build()
+                PeriodicWorkRequestBuilder<PollWorker>(15, TimeUnit.MINUTES).setConstraints(
+                    constraints
+                ).build()
             WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
                 POLL_WORK,
                 ExistingPeriodicWorkPolicy.KEEP,
-                periodicRequest)
+                periodicRequest
+            )
         } else {
             WorkManager.getInstance(requireContext()).cancelUniqueWork(POLL_WORK)
         }
