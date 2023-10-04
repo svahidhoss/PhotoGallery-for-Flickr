@@ -13,6 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -85,6 +88,21 @@ class PhotoGalleryFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun showImageOnChromeTabs(photoPageUri: Uri) {
+        val defaultColors = CustomTabColorSchemeParams.Builder()
+            .setToolbarColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    androidx.appcompat.R.color.primary_dark_material_dark
+                )
+            ).build()
+        CustomTabsIntent.Builder()
+            .setDefaultColorSchemeParams(defaultColors)
+            .setShowTitle(true)
+            .build()
+            .launchUrl(requireContext(), photoPageUri)
     }
 
     override fun onDestroyView() {

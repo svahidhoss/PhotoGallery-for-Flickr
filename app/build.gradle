@@ -70,4 +70,5 @@ dependencies {
 
     implementation "androidx.navigation:navigation-fragment-ktx:$safeArgVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$safeArgVersion"
+    implementation 'androidx.browser:browser:1.6.0'
 }
