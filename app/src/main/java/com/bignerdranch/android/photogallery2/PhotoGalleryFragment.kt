@@ -37,6 +37,8 @@ class PhotoGalleryFragment : Fragment() {
 
     private var searchView: SearchView? = null
 
+    private var pollingMenuItem: MenuItem? = null
+
     private val photoGalleryViewModel: PhotoGalleryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,6 +90,7 @@ class PhotoGalleryFragment : Fragment() {
 
         val searchItem: MenuItem = menu.findItem(R.id.menu_item_search)
         searchView = searchItem.actionView as? SearchView
+        pollingMenuItem = menu.findItem(R.id.menu_item_toggle_polling)
 
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -124,6 +127,7 @@ class PhotoGalleryFragment : Fragment() {
     override fun onDestroyOptionsMenu() {
         super.onDestroyOptionsMenu()
         searchView = null
+        pollingMenuItem = null
     }
 
     private fun hideSoftKeyboard() {

@@ -44,6 +44,12 @@ class PhotoGalleryViewModel : ViewModel() {
                 }
             }
         }
+
+        viewModelScope.launch {
+            preferencesRepository.isPolling.collect { isPolling ->
+                _uiState.update { it.copy(isPolling = isPolling) }
+            }
+        }
     }
 
     fun setQuery(query: String) {
@@ -63,9 +69,16 @@ class PhotoGalleryViewModel : ViewModel() {
         Log.d(TAG, "toggleProgressBarVisibility to $isVisible")
         _isProgressBarVisible.value = isVisible
     }
+
+    fun toggleIsPolling() {
+        viewModelScope.launch {
+            preferencesRepository.setPolling(!_uiState.value.isPolling)
+        }
+    }
 }
 
 data class PhotoGalleryUiState(
     val images: List<GalleryItem> = listOf(),
-    val query: String = ""
+    val query: String = "",
+    val isPolling: Boolean = false
 )
