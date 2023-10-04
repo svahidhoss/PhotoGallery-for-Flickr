@@ -2,6 +2,7 @@ package com.bignerdranch.android.photogallery2
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -71,8 +73,11 @@ class PhotoGalleryFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 photoGalleryViewModel.uiState.collectLatest { state ->
                     binding.photoGrid.adapter = PhotoListAdapter(state.images) { photoPageUri ->
-                        val intent = Intent(Intent.ACTION_VIEW, photoPageUri)
-                        startActivity(intent)
+                        findNavController().navigate(
+                            PhotoGalleryFragmentDirections.actionShowPhoto(
+                                photoPageUri
+                            )
+                        )
                     }
                     searchView?.setQuery(state.query, false)
                     photoGalleryViewModel.toggleProgressBarVisibility(false)
@@ -163,5 +168,10 @@ class PhotoGalleryFragment : Fragment() {
         } else {
             WorkManager.getInstance(requireContext()).cancelUniqueWork(POLL_WORK)
         }
+    }
+
+    private fun openFlickrImageLink(photoPageUri: Uri) {
+        val intent = Intent(Intent.ACTION_VIEW, photoPageUri)
+        startActivity(intent)
     }
 }
