@@ -48,7 +48,7 @@ class PreferencesRepository private constructor(
     companion object {
         private val SEARCH_QUERY_KEY = stringPreferencesKey("search_query")
         private val PREF_LAST_RESULT_ID = stringPreferencesKey("lastResultId")
-        private val PREF_IS_POLLING = booleanPreferencesKey("lastResultId")
+        private val PREF_IS_POLLING = booleanPreferencesKey("isPolling")
         private var INSTANCE: PreferencesRepository? = null
 
         fun initialize(context: Context) {
