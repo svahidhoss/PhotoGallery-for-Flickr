@@ -66,6 +66,8 @@ class PhotoGalleryViewModel : ViewModel() {
     }
 
     fun toggleProgressBarVisibility(isVisible: Boolean) {
+        if (isProgressBarVisible.value == isVisible) return
+
         Log.d(TAG, "toggleProgressBarVisibility to $isVisible")
         _isProgressBarVisible.value = isVisible
     }
