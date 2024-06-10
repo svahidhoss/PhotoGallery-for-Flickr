@@ -1,5 +1,5 @@
-# Photo Galley
-PhotoGallery app for Flickr
+# Photo Galley for Flickr
+
 In this repo I developed a Flickr client application that downloads and displays photos from Flickr's public feed.
 Technologies Used: Kotlin, Android SDK, RecyclerView, Picasso, WorkManager.
 Key Features:
